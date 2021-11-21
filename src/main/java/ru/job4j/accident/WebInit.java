@@ -8,7 +8,15 @@ import ru.job4j.accident.config.WebConfig;
 import javax.servlet.ServletRegistration;
 
 /**
- * Класс WebInit
+ * Класс WebInit - расширяет WebApplicationInitializer.
+ * Когда tomcat загружает наше приложение, он ищет класс,
+ * который расширяет WebApplicationInitializer.
+ *
+ * Tomcat создает контекст Spring и загружает DispatcherServlet.
+ * WebApplicationInitializer - замена web.xml.
+ *
+ * Servlet 3 и выше могут запускаться без web.xml.
+ * Он использует конфигурирование через Java классы.
  *
  * @author Nikolay Polegaev
  * @version 1.0 21.11.2021

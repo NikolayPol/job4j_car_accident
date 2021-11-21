@@ -9,6 +9,10 @@ import org.springframework.web.servlet.view.JstlView;
 
 /**
  * Класс WebConfig
+ * Аннотация ComponentScan. Она сканирует проект и загружает бины в контекст.
+ * Внутри этого класса создается объект ViewResolver.
+ * Spring использует этот объект для поиска jsp.
+ * В нем сразу подключен JSTL.
  *
  * @author Nikolay Polegaev
  * @version 1.0 21.11.2021
@@ -16,7 +20,6 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @ComponentScan("ru.job4j.accident")
 public class WebConfig {
-
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
