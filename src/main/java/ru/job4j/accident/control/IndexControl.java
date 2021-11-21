@@ -4,6 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Класс IndexControl
  * Spring сканирует проект и регистрирует этот контроллер.
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexControl {
     @GetMapping("/")
     public String index(Model model) {
+        List<String> list = List.of("User1", "User3", "User3");
+        model.addAttribute("users", list);
         return "index";
     }
 }
