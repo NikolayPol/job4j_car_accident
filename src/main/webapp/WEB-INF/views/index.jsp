@@ -49,6 +49,10 @@
                         <td><c:out value="${accident.name}"/></td>
                         <td><c:out value="${accident.address}"/></td>
                         <td><c:out value="${accident.text}"/></td>
+                        <td>
+                            <input type="button" value="Изменить"
+                            onclick="window.location.href='update?id=${accident.id}'"/>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
