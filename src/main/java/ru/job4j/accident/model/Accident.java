@@ -2,26 +2,39 @@ package ru.job4j.accident.model;
 
 import lombok.*;
 
-import java.util.Objects;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.*;
 
 /**
  * Класс Accident - модель правонарушения(инцидента).
  *
  * @author Nikolay Polegaev
- * @version 1.1 21.11.2021
+ * @version 2.0 21.11.2021
  */
+@Entity
+@Table(name = "accident")
 @Builder
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String text;
     private String address;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "type_id")
     private AccidentType type;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "accident_rule",
+            joinColumns = @JoinColumn(name = "accident_id"),
+            inverseJoinColumns = @JoinColumn(name = "rule_id"))
     private Set<Rule> rules;
 
     public Accident(String name, String text, String address) {
@@ -48,6 +61,13 @@ public class Accident {
         this.rules = rules;
     }
 
+    public void addRule(Rule rule) {
+        if (rules == null) {
+            rules = new HashSet<>();
+        }
+        rules.add(rule);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -63,16 +83,5 @@ public class Accident {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Accident{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", text='" + text + '\''
-                + ", address='" + address + '\''
-                + ", accidentType='" + type + '\''
-                + '}';
     }
 }

@@ -2,6 +2,7 @@ package ru.job4j.accident.model;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -10,13 +11,16 @@ import java.util.Objects;
  * @author Nikolay Polegaev
  * @version 1.0 12.12.2021
  */
+@Entity
+@Table(name = "type")
 @Builder
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccidentType {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;

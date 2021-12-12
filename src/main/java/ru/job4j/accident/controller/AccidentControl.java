@@ -1,5 +1,6 @@
 package ru.job4j.accident.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.repository.AccidentMem;
+import ru.job4j.accident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,33 +22,33 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class AccidentControl {
-    private final AccidentMem accidents;
+    private final AccidentService accidentService;
 
-    public AccidentControl(AccidentMem accidents) {
-        this.accidents = accidents;
+    @Autowired
+    public AccidentControl(AccidentService accidentService) {
+        this.accidentService = accidentService;
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("types", accidentService.getAllTypes());
+        model.addAttribute("rules", accidentService.getAllRules());
+        return "accident/create";
     }
 
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
-        AccidentType type = accidents.findTypeById(accident.getType().getId());
+        AccidentType type = accidentService.findTypeById(accident.getType().getId());
         accident.setType(type);
         String[] ids = req.getParameterValues("rIds");
-        accident.setRules(accidents.getRules(ids));
-        accidents.addAccident(accident);
+        accidentService.saveOrUpdate(accident, ids);
         return "redirect:/";
     }
 
     @GetMapping("/update")
     public String update(@RequestParam("id") int id, Model model) {
-        model.addAttribute("types", accidents.getAllAccidentTypes());
-        model.addAttribute("accident", accidents.findById(id));
+        model.addAttribute("types", accidentService.getAllTypes());
+        model.addAttribute("accident", accidentService.findAccidentById(id));
         return "accident/update";
-    }
-
-    @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("types", accidents.getAllAccidentTypes());
-        model.addAttribute("rules", accidents.getAllRules());
-        return "accident/create";
     }
 }

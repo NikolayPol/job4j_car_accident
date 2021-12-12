@@ -2,7 +2,8 @@ package ru.job4j.accident.model;
 
 import lombok.*;
 
-import java.util.Objects;
+import javax.persistence.*;
+import java.util.*;
 
 /**
  * Класс Rule - описывает статьи нарушений
@@ -10,12 +11,16 @@ import java.util.Objects;
  * @author Nikolay Polegaev
  * @version 1.0 12.12.2021
  */
+@Entity
+@Table(name = "rule")
 @Builder
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Rule {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
 
