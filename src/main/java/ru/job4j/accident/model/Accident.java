@@ -8,7 +8,7 @@ import java.util.Objects;
  * Класс Accident - модель правонарушения(инцидента).
  *
  * @author Nikolay Polegaev
- * @version 1.0 21.11.2021
+ * @version 1.1 21.11.2021
  */
 @Builder
 @Setter
@@ -20,10 +20,19 @@ public class Accident {
     private String name;
     private String text;
     private String address;
+    private AccidentType type;
 
     public Accident(String name, String text, String address) {
         this.id = 0;
         this.name = name;
+        this.text = text;
+        this.address = address;
+    }
+
+    public Accident(String name, AccidentType type, String text, String address) {
+        this.id = 0;
+        this.name = name;
+        this.type = type;
         this.text = text;
         this.address = address;
     }
@@ -52,6 +61,7 @@ public class Accident {
                 + ", name='" + name + '\''
                 + ", text='" + text + '\''
                 + ", address='" + address + '\''
+                + ", accidentType='" + type + '\''
                 + '}';
     }
 }
