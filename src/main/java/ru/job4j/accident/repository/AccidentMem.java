@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Класс AccidentMem - хранилище инцидентов.
@@ -18,6 +19,7 @@ import java.util.Map;
 @Repository
 public class AccidentMem {
 
+    private static final AtomicInteger ACC_ID = new AtomicInteger(3);
     private final Map<Integer, Accident> accidents = new HashMap<>();
 
     private AccidentMem() {
@@ -40,5 +42,16 @@ public class AccidentMem {
 
     public List<Accident> getAllAccidents() {
         return new ArrayList<>(accidents.values());
+    }
+
+    public void addAccident(Accident accident) {
+        if (accident.getId() == 0) {
+            accident.setId(ACC_ID.incrementAndGet());
+        }
+        accidents.put(accident.getId(), accident);
+    }
+
+    public Accident getById(int id) {
+        return accidents.get(id);
     }
 }

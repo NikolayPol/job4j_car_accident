@@ -1,9 +1,6 @@
 package ru.job4j.accident.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -16,11 +13,20 @@ import java.util.Objects;
 @Builder
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Accident {
     private int id;
     private String name;
     private String text;
     private String address;
+
+    public Accident(String name, String text, String address) {
+        this.id = 0;
+        this.name = name;
+        this.text = text;
+        this.address = address;
+    }
 
     @Override
     public boolean equals(Object o) {

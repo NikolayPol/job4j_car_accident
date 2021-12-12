@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import java.util.List;
 
 /**
- * Класс IndexControl - контроллер для главной страницы.
+ * Класс IndexControl - контроллер для главной страницы index.jsp.
  * Отмечено аннотацией @Controller.
  * Аннотации @Repository, @Service, @Controller представляют собой
  * частые случаи аннотации @Component.
