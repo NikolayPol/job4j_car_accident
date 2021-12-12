@@ -10,6 +10,8 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.repository.AccidentMem;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * Класс AccidentControl - контроллер для create.jsp
@@ -26,9 +28,11 @@ public class AccidentControl {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident) {
+    public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
         AccidentType type = accidents.findTypeById(accident.getType().getId());
         accident.setType(type);
+        String[] ids = req.getParameterValues("rIds");
+        accident.setRules(accidents.getRules(ids));
         accidents.addAccident(accident);
         return "redirect:/";
     }
@@ -43,6 +47,7 @@ public class AccidentControl {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("types", accidents.getAllAccidentTypes());
+        model.addAttribute("rules", accidents.getAllRules());
         return "accident/create";
     }
 }

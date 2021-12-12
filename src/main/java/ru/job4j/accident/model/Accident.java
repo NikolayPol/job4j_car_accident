@@ -3,6 +3,7 @@ package ru.job4j.accident.model;
 import lombok.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Класс Accident - модель правонарушения(инцидента).
@@ -21,6 +22,7 @@ public class Accident {
     private String text;
     private String address;
     private AccidentType type;
+    private Set<Rule> rules;
 
     public Accident(String name, String text, String address) {
         this.id = 0;
@@ -35,6 +37,15 @@ public class Accident {
         this.type = type;
         this.text = text;
         this.address = address;
+    }
+
+    public Accident(String name, AccidentType type, String text, String address, Set<Rule> rules) {
+        this.id = 0;
+        this.name = name;
+        this.type = type;
+        this.text = text;
+        this.address = address;
+        this.rules = rules;
     }
 
     @Override
