@@ -3,13 +3,15 @@ package ru.job4j.accident.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.repository.AccidentJdbcTemplate;
 import ru.job4j.accident.service.AccidentService;
 import org.springframework.ui.Model;
 
 import java.util.List;
 
+
 /**
- * Класс IndexControl - контроллер для главной страницы index.jsp.
+ * Класс IndexControl - контроллер для главной страницы indexMem.jsp.
  * Отмечено аннотацией @Controller.
  * Аннотации @Repository, @Service, @Controller представляют собой
  * частые случаи аннотации @Component.
@@ -27,16 +29,15 @@ import java.util.List;
  */
 @Controller
 public class IndexControl {
-    private final AccidentService service;
+    private final AccidentJdbcTemplate accidents;
 
-    public IndexControl(AccidentService service) {
-        this.service = service;
+    public IndexControl(AccidentJdbcTemplate accidents) {
+        this.accidents = accidents;
     }
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Accident> allAccidents = service.getAllAccidents();
-        model.addAttribute("accidents", allAccidents);
+        model.addAttribute("accidents", accidents.getAll());
         return "index";
     }
 }
