@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class AccidentControl {
+
     private final AccidentService accidentService;
 
     @Autowired
