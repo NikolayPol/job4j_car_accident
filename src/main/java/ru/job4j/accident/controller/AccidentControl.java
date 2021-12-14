@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * Класс AccidentControl - контроллер для create.jsp
  *
  * @author Nikolay Polegaev
- * @version 1.1 12.12.2021
+ * @version 1.2 14.12.2021
  */
 @Controller
 public class AccidentControl {
@@ -38,8 +38,6 @@ public class AccidentControl {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
-        AccidentType type = accidentService.findTypeById(accident.getType().getId());
-        accident.setType(type);
         String[] ids = req.getParameterValues("rIds");
         accidentService.saveOrUpdate(accident, ids);
         return "redirect:/";

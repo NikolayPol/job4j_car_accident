@@ -42,6 +42,7 @@
                     <th scope="col">Статьи</th>
                     <th scope="col">Адрес</th>
                     <th scope="col">Описание</th>
+                    <th scope="col">Изменить</th>
                 </tr>
                 </thead>
                 <tbody>

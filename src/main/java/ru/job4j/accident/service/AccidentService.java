@@ -12,7 +12,7 @@ import java.util.List;
  * Класс AccidentService - описывает логику работы.
  *
  * @author Nikolay Polegaev
- * @version 1.0 12.12.2021
+ * @version 1.1 14.12.2021
  */
 @Service
 public class AccidentService {
@@ -27,13 +27,13 @@ public class AccidentService {
     }
 
     public void saveOrUpdate(Accident accident, String[] ids) {
-            AccidentType type = accidentRepository.findTypeById(accident.getType().getId());
-            accident.setType(type);
-            for (String id : ids) {
-                Rule rule = accidentRepository.findRuleById(Integer.parseInt(id));
-                accident.addRule(rule);
-            }
-            accidentRepository.saveOrUpdate(accident);
+        AccidentType type = accidentRepository.findTypeById(accident.getType().getId());
+        accident.setType(type);
+        for (String id : ids) {
+            Rule rule = accidentRepository.findRuleById(Integer.parseInt(id));
+            accident.addRule(rule);
+        }
+        accidentRepository.saveOrUpdate(accident);
     }
 
     public Accident findAccidentById(int id) {
