@@ -27,8 +27,7 @@ public class AccidentService {
     }
 
     public void saveOrUpdate(Accident accident, String[] ids) {
-        AccidentType type = accidentRepository.findTypeById(accident.getType().getId());
-        accident.setType(type);
+
         for (String id : ids) {
             Rule rule = accidentRepository.findRuleById(Integer.parseInt(id));
             accident.addRule(rule);

@@ -56,7 +56,11 @@ public class AccidentHibernate {
     }
 
     public void saveOrUpdate(Accident accident) {
-        sessionVoidMethods(session -> session.saveOrUpdate(accident));
+        sessionVoidMethods(session -> {
+            AccidentType type = findTypeById(accident.getType().getId());
+            accident.setType(type);
+            session.saveOrUpdate(accident);
+        });
     }
 
     public List<Accident> getAllAccidents() {
