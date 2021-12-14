@@ -27,7 +27,6 @@ public class AccidentService {
     }
 
     public void saveOrUpdate(Accident accident, String[] ids) {
-
         for (String id : ids) {
             Rule rule = accidentRepository.findRuleById(Integer.parseInt(id));
             accident.addRule(rule);
