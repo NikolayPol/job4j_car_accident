@@ -9,7 +9,7 @@ import java.util.*;
  * Класс Accident - модель правонарушения(инцидента).
  *
  * @author Nikolay Polegaev
- * @version 2.0 21.11.2021
+ * @version 3.0 14.12.2021
  */
 @Entity
 @Table(name = "accident")
@@ -38,14 +38,12 @@ public class Accident {
     private Set<Rule> rules;
 
     public Accident(String name, String text, String address) {
-        this.id = 0;
         this.name = name;
         this.text = text;
         this.address = address;
     }
 
     public Accident(String name, AccidentType type, String text, String address) {
-        this.id = 0;
         this.name = name;
         this.type = type;
         this.text = text;
@@ -53,7 +51,6 @@ public class Accident {
     }
 
     public Accident(String name, AccidentType type, String text, String address, Set<Rule> rules) {
-        this.id = 0;
         this.name = name;
         this.type = type;
         this.text = text;
