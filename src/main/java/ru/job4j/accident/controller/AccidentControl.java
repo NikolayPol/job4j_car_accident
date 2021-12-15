@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * Класс AccidentControl - контроллер для create.jsp
  *
  * @author Nikolay Polegaev
- * @version 1.2 14.12.2021
+ * @version 1.3 15.12.2021
  */
 @Controller
 public class AccidentControl {

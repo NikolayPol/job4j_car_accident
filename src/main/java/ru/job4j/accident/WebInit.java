@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+import ru.job4j.accident.config.DataConfig;
 import ru.job4j.accident.config.HbmConfig;
 import ru.job4j.accident.config.WebConfig;
 import javax.servlet.ServletRegistration;
@@ -29,13 +30,13 @@ import javax.servlet.ServletRegistration;
  * Без этого кириллиц будет выглядеть крякозаброй.
  *
  * @author Nikolay Polegaev
- * @version 1.1 12.12.2021
+ * @version 1.2 15.12.2021
  */
 public class WebInit implements WebApplicationInitializer {
 
     public void onStartup(ServletContext servletCxt) {
         AnnotationConfigWebApplicationContext ac = new AnnotationConfigWebApplicationContext();
-        ac.register(WebConfig.class, HbmConfig.class);
+        ac.register(WebConfig.class, DataConfig.class);
         ac.refresh();
 
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
