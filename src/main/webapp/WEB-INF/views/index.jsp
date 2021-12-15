@@ -28,6 +28,9 @@
                             </li>
                         </ul>
                     </div>
+                    <div>
+                        Login as : ${user.username}
+                    </div>
                 </div>
             </nav>
         </div>
