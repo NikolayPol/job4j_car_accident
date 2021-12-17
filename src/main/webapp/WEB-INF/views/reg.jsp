@@ -44,6 +44,11 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <c:if test="${not empty userRegistered}">
+                        <div style="color:red; font-weight: bold; margin: 30px 0px;">
+                            Пользователь с именем ${userRegistered.username} уже зарегистрирован!
+                        </div>
+                    </c:if>
                 </form>
             </div>
         </div>
