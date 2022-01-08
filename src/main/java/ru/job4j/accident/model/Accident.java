@@ -29,14 +29,14 @@ public class Accident {
     @ManyToOne(cascade = {CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.REFRESH,
-            CascadeType.REMOVE}, fetch = FetchType.EAGER)
+            CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id")
     private AccidentType type;
 
     @ManyToMany(cascade = {CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.REFRESH,
-            CascadeType.REMOVE}, fetch = FetchType.EAGER)
+            CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "accident_rule",
             joinColumns = @JoinColumn(name = "accident_id"),
