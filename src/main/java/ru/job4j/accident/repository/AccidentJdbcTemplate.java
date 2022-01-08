@@ -14,16 +14,53 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Класс AccidentJdbcTemplate - для работы с БД.
+ * Класс AccidentJdbcTemplate - для работы с БД через jdbc.
  *
  * @author Nikolay Polegaev
  * @version 1.0 12.12.2021
  */
+@Repository
 public class AccidentJdbcTemplate {
+
     private final JdbcTemplate jdbc;
 
     public AccidentJdbcTemplate(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+    }
+
+    public List<Accident> getAllAccidents() {
+        Map<Integer, Integer> accAndtype = new HashMap<>();
+        List<Accident> accidents = jdbc.query("SELECT * FROM accident", (res, row) -> {
+            accAndtype.put(res.getInt("id"), res.getInt("type_id"));
+            return Accident.builder()
+                    .id(res.getInt("id"))
+                    .name(res.getString("name"))
+                    .address(res.getString("address"))
+                    .text(res.getString("text"))
+                    .build();
+        });
+        accidents.forEach(accident -> accident.setType(findTypeById(
+                accAndtype.get(accident.getId()))));
+        accidents.forEach(accident -> accident.setRules(getRulesByAccidentId(
+                accident.getId())));
+        return new ArrayList<>(accidents);
+    }
+
+    public Accident findAccidentById(int id) {
+        final int[] typeId = new int[1];
+        Accident accident = jdbc
+                .queryForObject("SELECT * FROM accident WHERE id = ?", (res, row) -> {
+                    typeId[0] = res.getInt("type_id");
+                    return Accident.builder()
+                            .id(res.getInt("id"))
+                            .name(res.getString("name"))
+                            .address(res.getString("address"))
+                            .text(res.getString("text"))
+                            .build();
+                }, id);
+        accident.setType(findTypeById(typeId[0]));
+        accident.setRules(getRulesByAccidentId(accident.getId()));
+        return accident;
     }
 
     public void saveOrUpdate(Accident accident) {
@@ -62,42 +99,6 @@ public class AccidentJdbcTemplate {
         accident.getRules().forEach(rule -> jdbc.update("INSERT INTO "
                         + "accident_rule (accident_id, rule_id) VALUES(?, ?)",
                 accident.getId(), rule.getId()));
-    }
-
-    public List<Accident> getAllAccidents() {
-        Map<Integer, Integer> accAndtype = new HashMap<>();
-        List<Accident> accidents = jdbc.query("SELECT * FROM accident", (res, row) -> {
-            accAndtype.put(res.getInt("id"), res.getInt("accidentType"));
-            return Accident.builder()
-                    .id(res.getInt("id"))
-                    .name(res.getString("name"))
-                    .address(res.getString("address"))
-                    .text(res.getString("text"))
-                    .build();
-        });
-        accidents.forEach(accident -> accident.setType(findTypeById(
-                accAndtype.get(accident.getId()))));
-        accidents.forEach(accident -> accident.setRules(getRulesByAccidentId(
-                accident.getId())));
-//        return new HashSet<>(accidents);
-        return new ArrayList<>(accidents);
-    }
-
-    public Accident findAccidentById(int id) {
-        final int[] typeId = new int[1];
-        Accident accident = jdbc
-                .queryForObject("SELECT * FROM accident WHERE id = ?", (res, row) -> {
-                    typeId[0] = res.getInt("accidentType");
-                    return Accident.builder()
-                            .id(res.getInt("id"))
-                            .name(res.getString("name"))
-                            .address(res.getString("address"))
-                            .text(res.getString("text"))
-                            .build();
-                }, id);
-        accident.setType(findTypeById(typeId[0]));
-        accident.setRules(getRulesByAccidentId(accident.getId()));
-        return accident;
     }
 
     public List<AccidentType> getAllTypes() {
