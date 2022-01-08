@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
@@ -71,7 +72,8 @@ public class AccidentJdbcTemplate {
         }
     }
 
-    private void save(Accident accident) {
+    @Transactional
+    public void save(Accident accident) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(connection -> {
             PreparedStatement ps = connection
@@ -88,7 +90,8 @@ public class AccidentJdbcTemplate {
                 + "VALUES(?, ?)", keyHolder.getKeys().get("id"), rule.getId()));
     }
 
-    private void update(Accident accident) {
+    @Transactional
+    public void update(Accident accident) {
         jdbc.update("UPDATE accident SET name = ?, text = ?, address = ?, type_id = ? WHERE id = ?",
                 accident.getName(),
                 accident.getText(),
