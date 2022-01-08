@@ -15,7 +15,7 @@ import ru.job4j.accident.service.UserService;
  * Класс RegControl - контроллер для регистрации.
  *
  * @author Nikolay Polegaev
- * @version 1.0 15.12.2021
+ * @version 1.1 08.01.2022
  */
 @Controller
 public class RegControl {
@@ -38,13 +38,12 @@ public class RegControl {
         if (userRegistered != null && user.getUsername().equals(userRegistered.getUsername())) {
             model.addAttribute("userRegistered", userRegistered);
             return "reg";
-        } else {
-            user.setEnabled(true);
-            user.setPassword(encoder.encode(user.getPassword()));
-            user.setAuthority(authorities.findByAuthority("ROLE_USER"));
-            users.save(user);
-            return "redirect:/login";
         }
+        user.setEnabled(true);
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setAuthority(authorities.findByAuthority("ROLE_USER"));
+        users.save(user);
+        return "redirect:/login";
     }
 
     @GetMapping("/reg")
